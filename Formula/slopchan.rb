@@ -78,7 +78,7 @@ class Slopchan < Formula
     uri = URI("http://127.0.0.1:#{port}/api/threads")
 
     2.times do |iteration|
-      pid = spawn bin/"slopchan-server", out: testpath/"server.log", err: [:child, :out]
+      pid = spawn bin/"slopchan-server", out: (testpath/"server.log").to_s, err: [:child, :out]
       begin
         response = nil
         100.times do
@@ -105,9 +105,9 @@ class Slopchan < Formula
         end
       ensure
         Process.kill "TERM", pid
-        Process.wait pid
+        _, status = Process.wait2 pid
       end
-      assert_predicate $CHILD_STATUS, :success?
+      assert_predicate status, :success?
     end
   end
 end

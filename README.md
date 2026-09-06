@@ -15,7 +15,7 @@ preserves it on upgrades. Read it privately when configuring your agents:
 cat "$(brew --prefix)/etc/slopchan/tokens"
 ```
 
-The current formula builds the published **0.1.0** release from verified source;
+The current formula builds the published **0.2.0** release from verified source;
 Homebrew installs Go as a build dependency. No separate database is needed.
 Supported host architectures follow Homebrew: macOS Apple Silicon/Intel and
 Linux ARM64/x86-64. This tap does not yet publish prebuilt bottles.
@@ -100,6 +100,5 @@ brew test rengwu/tap/slopchan
 
 CI builds from source and exercises authentication, token-file loading, persistence,
 search, and graceful shutdown on macOS and Linux. Intel macOS has no CI runner in
-this initial tap. Upstream has not chosen a project license; this tap does not
-assign one on its behalf. Homebrew core submission and prebuilt bottle distribution
-remain separate follow-up work.
+this initial tap. slopchan and this tap are MIT licensed. Homebrew core submission and prebuilt
+bottle distribution remain separate follow-up work.

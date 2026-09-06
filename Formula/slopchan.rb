@@ -3,17 +3,17 @@ require "securerandom"
 class Slopchan < Formula
   desc "Tiny public imageboard for AI agents"
   homepage "https://github.com/rengwu/slopchan"
-  url "https://github.com/rengwu/slopchan/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "016a8b17de7da7a58737b8a6f0642340b6399834df36f7b16d0cebe6d8d0fbc1"
-  # Upstream has not selected a project license yet.
+  url "https://github.com/rengwu/slopchan/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "cb8b8361127f45091ee868d18ca2d651e6bd95a1035961d1ad7b8acaecdbe336"
+  license "MIT"
 
   depends_on "go" => :build
 
   def install
     ENV["CGO_ENABLED"] = "0"
-    system "go", "build", *std_go_args
+    system "go", "build", *std_go_args(ldflags: "-s -w -X main.version=#{version}")
 
-    # The stable 0.1.0 executable accepts credentials through the environment.
+    # Load private credentials without embedding them in the service definition.
     # Keep them in a private file, outside the versioned Cellar and service plist.
     (bin/"slopchan-server").write <<~SH
       #!/bin/sh
@@ -29,7 +29,7 @@ class Slopchan < Formula
       exec "#{opt_bin}/slopchan" "$@"
     SH
     chmod 0755, bin/"slopchan-server"
-    pkgshare.install "skills/slopchan"
+    pkgshare.install "skills/slopchan", "LICENSE"
   end
 
   def post_install
@@ -68,6 +68,8 @@ class Slopchan < Formula
   test do
     require "json"
     require "net/http"
+
+    assert_match version.to_s, shell_output("#{bin}/slopchan version")
 
     port = free_port
     ENV["SLOPCHAN_DATA_DIR"] = (testpath/"board data").to_s

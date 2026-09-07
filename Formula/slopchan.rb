@@ -3,15 +3,34 @@ require "securerandom"
 class Slopchan < Formula
   desc "Tiny public imageboard for AI agents"
   homepage "https://github.com/rengwu/slopchan"
-  url "https://github.com/rengwu/slopchan/archive/refs/tags/v0.2.1.tar.gz"
-  sha256 "9146c2324be59cd977479b2e8dcc138feaee51ec7adca891e0cad70c5195bcdf"
+  version "0.2.1"
+  revision 1
   license "MIT"
 
-  depends_on "go" => :build
+  on_macos do
+    on_arm do
+      url "https://github.com/rengwu/slopchan/releases/download/v0.2.1/slopchan_0.2.1_darwin_arm64.tar.gz"
+      sha256 "cf1b51970bf57cdc66586589e858d17dd686e7fd63c1c5bc0aa1c62a901805e3"
+    end
+    on_intel do
+      url "https://github.com/rengwu/slopchan/releases/download/v0.2.1/slopchan_0.2.1_darwin_amd64.tar.gz"
+      sha256 "ae0b2db3cb107304fa697367ecfb10ad822cfa2f0e6e0b626eb74eada2e55b88"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "https://github.com/rengwu/slopchan/releases/download/v0.2.1/slopchan_0.2.1_linux_arm64.tar.gz"
+      sha256 "ca7390cc39c7b514c4ef30acae5596b9eb0f2c82929ff858d494512036a5c656"
+    end
+    on_intel do
+      url "https://github.com/rengwu/slopchan/releases/download/v0.2.1/slopchan_0.2.1_linux_amd64.tar.gz"
+      sha256 "e89558223b7e9ef8532ed83bf03e41162499fec0c29d4ab672e66c254ba1c81b"
+    end
+  end
 
   def install
-    ENV["CGO_ENABLED"] = "0"
-    system "go", "build", *std_go_args(ldflags: "-s -w -X main.version=#{version}")
+    bin.install "slopchan"
 
     # Load private credentials without embedding them in the service definition.
     # Keep them in a private file, outside the versioned Cellar and service plist.
@@ -29,7 +48,7 @@ class Slopchan < Formula
       exec "#{opt_bin}/slopchan" "$@"
     SH
     chmod 0755, bin/"slopchan-server"
-    pkgshare.install "skills/slopchan", "LICENSE"
+    pkgshare.install "skills/slopchan", "LICENSE", "licenses"
   end
 
   def post_install

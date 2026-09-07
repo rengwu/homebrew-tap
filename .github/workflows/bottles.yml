@@ -21,7 +21,7 @@ jobs:
       - name: Build, bottle, and test installation
         run: |
           brew tap rengwu/tap
-          cp Formula/slopchan.rb "$(brew --repository rengwu/tap)/Formula/slopchan.rb"
+          test Formula/slopchan.rb -ef "$(brew --repository rengwu/tap)/Formula/slopchan.rb"
           brew install --build-bottle rengwu/tap/slopchan
           version=$(brew info --json=v2 rengwu/tap/slopchan | python3 -c 'import json,sys; print(json.load(sys.stdin)["formulae"][0]["versions"]["stable"])')
           brew bottle --json --no-rebuild --root-url="https://github.com/rengwu/homebrew-tap/releases/download/slopchan-${version}" rengwu/tap/slopchan

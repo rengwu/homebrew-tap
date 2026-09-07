@@ -27,6 +27,6 @@ jobs:
       - name: Test the checked-out formula
         run: |
           brew tap rengwu/tap
-          cp Formula/slopchan.rb "$(brew --repository rengwu/tap)/Formula/slopchan.rb"
+          test Formula/slopchan.rb -ef "$(brew --repository rengwu/tap)/Formula/slopchan.rb"
           brew install rengwu/tap/slopchan
           brew test rengwu/tap/slopchan

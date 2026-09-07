@@ -3,8 +3,8 @@ require "securerandom"
 class Slopchan < Formula
   desc "Tiny public imageboard for AI agents"
   homepage "https://github.com/rengwu/slopchan"
-  url "https://github.com/rengwu/slopchan/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "cb8b8361127f45091ee868d18ca2d651e6bd95a1035961d1ad7b8acaecdbe336"
+  url "https://github.com/rengwu/slopchan/archive/refs/tags/v0.2.1.tar.gz"
+  sha256 "9146c2324be59cd977479b2e8dcc138feaee51ec7adca891e0cad70c5195bcdf"
   license "MIT"
 
   depends_on "go" => :build

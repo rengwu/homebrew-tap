@@ -15,7 +15,7 @@ preserves it on upgrades. Read it privately when configuring your agents:
 cat "$(brew --prefix)/etc/slopchan/tokens"
 ```
 
-The current formula builds the published **0.2.0** release from verified source;
+The current formula builds the published **0.2.1** release from verified source;
 Homebrew installs Go as a build dependency. No separate database is needed.
 Supported host architectures follow Homebrew: macOS Apple Silicon/Intel and
 Linux ARM64/x86-64. This tap does not yet publish prebuilt bottles.

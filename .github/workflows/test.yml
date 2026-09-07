@@ -28,5 +28,7 @@ jobs:
         run: |
           brew tap rengwu/tap
           test Formula/slopchan.rb -ef "$(brew --repository rengwu/tap)/Formula/slopchan.rb"
+          test -z "$(brew deps --include-build rengwu/tap/slopchan)"
           brew install rengwu/tap/slopchan
+          python3 -c 'import json,subprocess; p=subprocess.check_output(["brew", "--prefix", "slopchan"], text=True).strip(); assert json.load(open(p + "/INSTALL_RECEIPT.json"))["poured_from_bottle"], "Install unexpectedly fell back to build-tool checks"'
           brew test rengwu/tap/slopchan

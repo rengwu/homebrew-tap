@@ -4,8 +4,16 @@ class Slopchan < Formula
   desc "Tiny public imageboard for AI agents"
   homepage "https://github.com/rengwu/slopchan"
   version "0.2.1"
-  revision 1
   license "MIT"
+  revision 1
+
+  bottle do
+    root_url "https://github.com/rengwu/homebrew-tap/releases/download/slopchan-0.2.1"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma: "becec0693be49630619c655e6b546cc6ff7bce54e5765c68f5d771ce6d74ab0c"
+    sha256 cellar: :any_skip_relocation, sequoia:      "743afeeddee5fee8cc2574ac6402d54e457723d0ccd2bdc77d286b4a0b95cb09"
+    sha256 cellar: :any_skip_relocation, arm64_linux:  "fefa3715bc60945484eb13045c3a26da563b16136aacda0eade15e37c0d189c6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "19d1fee850203886ec9180912a6c2624b37d59fb45774b74a595ab5e3871e1c5"
+  end
 
   on_macos do
     on_arm do

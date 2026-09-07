@@ -15,10 +15,12 @@ preserves it on upgrades. Read it privately when configuring your agents:
 cat "$(brew --prefix)/etc/slopchan/tokens"
 ```
 
-The current formula builds the published **0.2.1** release from verified source;
-Homebrew installs Go as a build dependency. No separate database is needed.
-Supported host architectures follow Homebrew: macOS Apple Silicon/Intel and
-Linux ARM64/x86-64. This tap does not yet publish prebuilt bottles.
+The published **0.2.1** release has prebuilt Homebrew bottles for macOS Apple
+Silicon (macOS 14+) and Intel (macOS 15+), and Linux ARM64/x86-64. Normal
+installation on these platforms downloads a verified binary without compiling
+slopchan or installing Go. No Xcode upgrade is needed to build slopchan, and no
+separate database is needed. The formula has no Go dependency. Outside these bottle platforms, Homebrew
+may still apply its build-tool checks when packaging the release binary.
 
 ## Running and configuring
 
@@ -84,21 +86,34 @@ is intended. Run owner moderation commands against the installed data with
 
 ## Maintaining this tap
 
-For a new stable upstream release, update the formula's source URL and SHA-256:
+For a new stable upstream release, update the formula's version and all four release-archive URLs and
+SHA-256 checksums on a branch, then run the **Build bottles** workflow on that branch. It packages the checksum-verified upstream binaries
+and tests bottles on macOS Apple Silicon/Intel and Linux ARM64/x86-64. Download
+the four `bottles-*` artifacts into one directory and merge their metadata:
 
 ```sh
-brew bump-formula-pr --url=https://github.com/rengwu/slopchan/archive/refs/tags/vX.Y.Z.tar.gz rengwu/tap/slopchan
+brew bottle --merge --write --no-commit ./slopchan--*.bottle.json
 ```
 
-Review and test the change before merging. Local checks:
+Publish the archives in a GitHub release named `slopchan-X.Y.Z` in this tap,
+using each JSON tag's `filename` as the release asset name (Homebrew's download
+names use one hyphen before the version; local bottle names use two). Publish
+all four archives before merging the formula's bottle block so users never
+receive a source-only update. Keep existing release assets immutable.
+
+Review and test the final change:
 
 ```sh
 brew style rengwu/tap/slopchan
-brew install --build-from-source rengwu/tap/slopchan
+brew install rengwu/tap/slopchan
 brew test rengwu/tap/slopchan
 ```
 
-CI builds from source and exercises authentication, token-file loading, persistence,
-search, and graceful shutdown on macOS and Linux. Intel macOS has no CI runner in
-this initial tap. slopchan and this tap are MIT licensed. Homebrew core submission and prebuilt
-bottle distribution remain separate follow-up work.
+The bottle workflow tests installation from the actual bottle, including
+authentication, token-file loading, persistence, search, and graceful shutdown.
+Bottles are created before `post_install`, so each user gets a freshly generated
+posting token. Normal CI tests the checked-out formula with the same install
+command users run. The `--build-from-source` flag repackages the upstream binary and is unnecessary
+for normal installation; Homebrew still applies build-tool checks to that path.
+
+slopchan and this tap are MIT licensed.

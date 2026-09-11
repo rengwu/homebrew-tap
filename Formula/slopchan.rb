@@ -1,36 +1,28 @@
 class Slopchan < Formula
   desc "Self-hosted imageboard for AI agents"
   homepage "https://github.com/rengwu/slopchan"
-  version "0.3.2"
+  version "0.3.3"
   license "MIT"
-
-  bottle do
-    root_url "https://github.com/rengwu/homebrew-tap/releases/download/slopchan-0.3.2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma: "698179f0de29cc10cb7670f62e1fb1a0169b96bb564c0d8ab765b22722e5b062"
-    sha256 cellar: :any_skip_relocation, sequoia:      "70390de53c0200772f8f3419bf1c8c60a8ded28a1a361fd115319e0c3088394f"
-    sha256 cellar: :any_skip_relocation, arm64_linux:  "eb38ff57f7e4203b4d9f89ee5dfa612dadd69efaef745179cfa04dfde8aa6c15"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "a8103dbba8fa8c54d6fd0a925ab5d02cd992e4936d2360a8cff0d4e6d22fa8cf"
-  end
 
   on_macos do
     on_arm do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.3.2/slopchan_0.3.2_darwin_arm64.tar.gz"
-      sha256 "84410c349ed1ed8f61ce973c092354a9a6e5d99553b5998e80f03cfaa6a9b9af"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.3/slopchan_0.3.3_darwin_arm64.tar.gz"
+      sha256 "23811132e068ee04db30b2609b4fbbe99fdb27a3fdfd6eb262174d0d1c82ca7e"
     end
     on_intel do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.3.2/slopchan_0.3.2_darwin_amd64.tar.gz"
-      sha256 "79614ea9fa3cb625e91c03946c48b8ac181ab89d6aeec81a5fa21d489c4d620e"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.3/slopchan_0.3.3_darwin_amd64.tar.gz"
+      sha256 "d24ef2c55cd003e945a89e912841aa7d958d27c30fc521f6b8927e95fbcf840b"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.3.2/slopchan_0.3.2_linux_arm64.tar.gz"
-      sha256 "83620a71055db85e48e4487072a1450225fde4b2a0676d82e3546022df5f63f9"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.3/slopchan_0.3.3_linux_arm64.tar.gz"
+      sha256 "25f3820a8c14ed32b9972edeadd9dfe9e9cb3a187c5ccc3259a7a16ab70afd76"
     end
     on_intel do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.3.2/slopchan_0.3.2_linux_amd64.tar.gz"
-      sha256 "46ece80792d7344b06079d3da79c43369e6f47a74c59da245f97abdee200470d"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.3/slopchan_0.3.3_linux_amd64.tar.gz"
+      sha256 "be55a7b28c0db47fcdabc1f468057d30e08e6f9fbbc75ef64886be7c13e1372d"
     end
   end
 

@@ -32,3 +32,4 @@ jobs:
           brew install rengwu/tap/slopchan
           python3 -c 'import json,subprocess; p=subprocess.check_output(["brew", "--prefix", "slopchan"], text=True).strip(); assert json.load(open(p + "/INSTALL_RECEIPT.json"))["poured_from_bottle"], "Install unexpectedly fell back to build-tool checks"'
           brew test rengwu/tap/slopchan
+          python3 scripts/smoke-admin.py "$(brew --prefix slopchan)/bin/slopchan-server"

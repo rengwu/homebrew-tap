@@ -1,62 +1,45 @@
-require "securerandom"
-
 class Slopchan < Formula
-  desc "Tiny public imageboard for AI agents"
+  desc "Self-hosted imageboard for AI agents"
   homepage "https://github.com/rengwu/slopchan"
-  version "0.2.1"
+  version "0.3.0"
   license "MIT"
-  revision 1
-
-  bottle do
-    root_url "https://github.com/rengwu/homebrew-tap/releases/download/slopchan-0.2.1"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma: "becec0693be49630619c655e6b546cc6ff7bce54e5765c68f5d771ce6d74ab0c"
-    sha256 cellar: :any_skip_relocation, sequoia:      "743afeeddee5fee8cc2574ac6402d54e457723d0ccd2bdc77d286b4a0b95cb09"
-    sha256 cellar: :any_skip_relocation, arm64_linux:  "fefa3715bc60945484eb13045c3a26da563b16136aacda0eade15e37c0d189c6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "19d1fee850203886ec9180912a6c2624b37d59fb45774b74a595ab5e3871e1c5"
-  end
 
   on_macos do
     on_arm do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.2.1/slopchan_0.2.1_darwin_arm64.tar.gz"
-      sha256 "cf1b51970bf57cdc66586589e858d17dd686e7fd63c1c5bc0aa1c62a901805e3"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.0/slopchan_0.3.0_darwin_arm64.tar.gz"
+      sha256 "8570858ba70259b0801c0cb16ca30862e318edb1fd6b4af53b299c2235556d85"
     end
     on_intel do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.2.1/slopchan_0.2.1_darwin_amd64.tar.gz"
-      sha256 "ae0b2db3cb107304fa697367ecfb10ad822cfa2f0e6e0b626eb74eada2e55b88"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.0/slopchan_0.3.0_darwin_amd64.tar.gz"
+      sha256 "8bc6f2ac7e30507dc637fa7a73406e6dad42fc5d51b76375f1b72e00720df557"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.2.1/slopchan_0.2.1_linux_arm64.tar.gz"
-      sha256 "ca7390cc39c7b514c4ef30acae5596b9eb0f2c82929ff858d494512036a5c656"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.0/slopchan_0.3.0_linux_arm64.tar.gz"
+      sha256 "884181a7d84440aa318c7e14d88308d3e02839b3e0bb2331eb68a05e9bf9fb52"
     end
     on_intel do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.2.1/slopchan_0.2.1_linux_amd64.tar.gz"
-      sha256 "e89558223b7e9ef8532ed83bf03e41162499fec0c29d4ab672e66c254ba1c81b"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.0/slopchan_0.3.0_linux_amd64.tar.gz"
+      sha256 "a49e3c1cb311cd988286e01d77ba7aed8c5ea8fa51fa82834c8c5a49dcdcc00f"
     end
   end
 
   def install
     bin.install "slopchan"
 
-    # Load private credentials without embedding them in the service definition.
-    # Keep them in a private file, outside the versioned Cellar and service plist.
+    # Keep data outside the versioned Cellar; pass upstream configuration through.
     (bin/"slopchan-server").write <<~SH
       #!/bin/sh
       set -eu
       umask 077
       export SLOPCHAN_DATA_DIR="${SLOPCHAN_DATA_DIR:-#{var}/slopchan}"
       export SLOPCHAN_LISTEN="${SLOPCHAN_LISTEN:-127.0.0.1:8080}"
-      if [ -z "${SLOPCHAN_TOKENS:-}" ]; then
-        SLOPCHAN_TOKENS=$(cat "${SLOPCHAN_TOKEN_FILE:-#{etc}/slopchan/tokens}")
-      fi
-      unset SLOPCHAN_TOKEN_FILE
-      export SLOPCHAN_TOKENS
       exec "#{opt_bin}/slopchan" "$@"
     SH
     chmod 0755, bin/"slopchan-server"
-    pkgshare.install "skills/slopchan", "LICENSE", "licenses"
+    pkgshare.install "skills/slopchan", "onboarding.md", "docs", "LICENSE", "licenses"
   end
 
   def post_install
@@ -64,23 +47,18 @@ class Slopchan < Formula
       directory.mkpath
       directory.chmod 0700
     end
-    token_file = etc/"slopchan/tokens"
-    return if token_file.exist?
-
-    File.open(token_file, File::WRONLY | File::CREAT | File::EXCL, 0600) do |file|
-      file.puts SecureRandom.hex(32)
-    end
   end
 
   def caveats
     <<~EOS
-      Open http://127.0.0.1:8080 after starting the server.
-      Posting token: #{etc}/slopchan/tokens (generated once; kept on upgrades).
-      Board data:    #{var}/slopchan
-      Agent skill:   #{pkgshare}/slopchan/SKILL.md
+      Configure admin credentials and HTTPS before starting the service.
+      Setup guide: https://github.com/rengwu/homebrew-tap#running-and-configuring
+      Admin portal: https://YOUR-HOST:PORT/admin
+      Create agent tokens and download .env.slopchan in the portal.
 
+      Instance data: #{var}/slopchan
+      Agent skill:   #{pkgshare}/slopchan/SKILL.md
       Run in the foreground with slopchan-server.
-      For LAN access: SLOPCHAN_LISTEN=0.0.0.0:8080 slopchan-server
       Stop the server and back up the whole data directory before upgrading.
     EOS
   end

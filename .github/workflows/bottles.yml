@@ -25,10 +25,11 @@ jobs:
           brew install --build-bottle rengwu/tap/slopchan
           version=$(brew info --json=v2 rengwu/tap/slopchan | python3 -c 'import json,sys; print(json.load(sys.stdin)["formulae"][0]["versions"]["stable"])')
           brew bottle --json --no-rebuild --root-url="https://github.com/rengwu/homebrew-tap/releases/download/slopchan-${version}" rengwu/tap/slopchan
-          # Bottle before post_install so no generated posting token is shipped.
+          # Test a clean installation from the bottle, including admin bootstrap.
           brew uninstall slopchan
           HOMEBREW_DEVELOPER=1 brew install ./slopchan--*.bottle.tar.gz
           brew test rengwu/tap/slopchan
+          python3 scripts/smoke-admin.py "$(brew --prefix slopchan)/bin/slopchan-server"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: bottles-${{ matrix.os }}

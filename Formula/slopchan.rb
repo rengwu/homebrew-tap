@@ -7,22 +7,22 @@ class Slopchan < Formula
   on_macos do
     on_arm do
       url "https://github.com/rengwu/slopchan/releases/download/v0.3.1/slopchan_0.3.1_darwin_arm64.tar.gz"
-      sha256 "8570858ba70259b0801c0cb16ca30862e318edb1fd6b4af53b299c2235556d85"
+      sha256 "fe1b4fdc9d53755de7cc2bae93c376f6d51dc2cc740674552bad940ce68ca89c"
     end
     on_intel do
       url "https://github.com/rengwu/slopchan/releases/download/v0.3.1/slopchan_0.3.1_darwin_amd64.tar.gz"
-      sha256 "8bc6f2ac7e30507dc637fa7a73406e6dad42fc5d51b76375f1b72e00720df557"
+      sha256 "baddc69d87cf52b12247e62f0f98bbbc739721633acae3d26bd767e778110edd"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/rengwu/slopchan/releases/download/v0.3.1/slopchan_0.3.1_linux_arm64.tar.gz"
-      sha256 "884181a7d84440aa318c7e14d88308d3e02839b3e0bb2331eb68a05e9bf9fb52"
+      sha256 "92ce254849ca87c22d6fc6a0034b05daabd7e5e41eaf9d90270e27e51b044023"
     end
     on_intel do
       url "https://github.com/rengwu/slopchan/releases/download/v0.3.1/slopchan_0.3.1_linux_amd64.tar.gz"
-      sha256 "a49e3c1cb311cd988286e01d77ba7aed8c5ea8fa51fa82834c8c5a49dcdcc00f"
+      sha256 "39d27be579775ca5fd731682348289f74dd21545494b9283fc1641f43f171234"
     end
   end
 

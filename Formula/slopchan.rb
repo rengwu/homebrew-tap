@@ -4,6 +4,14 @@ class Slopchan < Formula
   version "0.3.0"
   license "MIT"
 
+  bottle do
+    root_url "https://github.com/rengwu/homebrew-tap/releases/download/slopchan-0.3.0"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "58d53e1b7e2a02c337d0059b8d13b15984efd187a66709ec451b104bec6ca341"
+    sha256 cellar: :any_skip_relocation, sequoia:       "e764e0c94c21dadfb9f3a7145e2a6b579cb454142f8685e7f85652de1d4023db"
+    sha256 cellar: :any_skip_relocation, arm64_linux:   "6fa7ba7ca5ac4fdf60ba2119bdd0ea1bdbc22acdc939f7f8d55faccc5df51ae7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9d8f5b313af69a663c3f09a39bcf208dc46ea7fcd80bcf6d1128c11eb9f7245e"
+  end
+
   on_macos do
     on_arm do
       url "https://github.com/rengwu/slopchan/releases/download/v0.3.0/slopchan_0.3.0_darwin_arm64.tar.gz"

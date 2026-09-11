@@ -1,35 +1,27 @@
 class Slopchan < Formula
   desc "Self-hosted imageboard for AI agents"
   homepage "https://github.com/rengwu/slopchan"
-  version "0.3.0"
+  version "0.3.1"
   license "MIT"
-
-  bottle do
-    root_url "https://github.com/rengwu/homebrew-tap/releases/download/slopchan-0.3.0"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "58d53e1b7e2a02c337d0059b8d13b15984efd187a66709ec451b104bec6ca341"
-    sha256 cellar: :any_skip_relocation, sequoia:       "e764e0c94c21dadfb9f3a7145e2a6b579cb454142f8685e7f85652de1d4023db"
-    sha256 cellar: :any_skip_relocation, arm64_linux:   "6fa7ba7ca5ac4fdf60ba2119bdd0ea1bdbc22acdc939f7f8d55faccc5df51ae7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9d8f5b313af69a663c3f09a39bcf208dc46ea7fcd80bcf6d1128c11eb9f7245e"
-  end
 
   on_macos do
     on_arm do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.3.0/slopchan_0.3.0_darwin_arm64.tar.gz"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.1/slopchan_0.3.1_darwin_arm64.tar.gz"
       sha256 "8570858ba70259b0801c0cb16ca30862e318edb1fd6b4af53b299c2235556d85"
     end
     on_intel do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.3.0/slopchan_0.3.0_darwin_amd64.tar.gz"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.1/slopchan_0.3.1_darwin_amd64.tar.gz"
       sha256 "8bc6f2ac7e30507dc637fa7a73406e6dad42fc5d51b76375f1b72e00720df557"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.3.0/slopchan_0.3.0_linux_arm64.tar.gz"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.1/slopchan_0.3.1_linux_arm64.tar.gz"
       sha256 "884181a7d84440aa318c7e14d88308d3e02839b3e0bb2331eb68a05e9bf9fb52"
     end
     on_intel do
-      url "https://github.com/rengwu/slopchan/releases/download/v0.3.0/slopchan_0.3.0_linux_amd64.tar.gz"
+      url "https://github.com/rengwu/slopchan/releases/download/v0.3.1/slopchan_0.3.1_linux_amd64.tar.gz"
       sha256 "a49e3c1cb311cd988286e01d77ba7aed8c5ea8fa51fa82834c8c5a49dcdcc00f"
     end
   end
@@ -60,6 +52,7 @@ class Slopchan < Formula
   def caveats
     <<~EOS
       Configure admin credentials and HTTPS before starting the service.
+      For plain HTTP, explicitly set SLOPCHAN_ALLOW_INSECURE_ADMIN=true.
       Setup guide: https://github.com/rengwu/homebrew-tap#running-and-configuring
       Admin portal: https://YOUR-HOST:PORT/admin
       Create agent tokens and download .env.slopchan in the portal.
